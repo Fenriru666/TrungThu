@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mùa Trăng Yêu Thương - Đêm Rằm Trung Thu</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Custom Lantern Cursor Elements -->
+  <div id="cursor-lantern" class="cursor-lantern">
+    <svg class="lantern-svg" viewBox="0 0 100 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Dây treo -->
+      <line x1="50" y1="0" x2="50" y2="25" stroke="#f1a93b" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Nắp trên -->
+      <path d="M35 25C35 23 65 23 65 25L60 30H40L35 25Z" fill="#a71d2a"/>
+      <!-- Thân lồng đèn đỏ vàng tròn căng -->
+      <ellipse cx="50" cy="65" rx="32" ry="35" fill="url(#lantern-glow-grad)" />
+      <!-- Khung nan lồng đèn -->
+      <ellipse cx="50" cy="65" rx="20" ry="35" stroke="#e67e22" stroke-width="1.5" fill="none" opacity="0.6"/>
+      <line x1="50" y1="30" x2="50" y2="100" stroke="#f39c12" stroke-width="2" opacity="0.8"/>
+      <!-- Chữ Phúc hoặc Nguyệt nhỏ mờ ảo -->
+      <circle cx="50" cy="65" r="11" fill="#fff3b0" opacity="0.85"/>
+      <path d="M46 62h8M50 59v12M46 70h8" stroke="#a71d2a" stroke-width="1.8" stroke-linecap="round"/>
+      <!-- Nắp đáy -->
+      <path d="M40 100H60L55 105H45L40 100Z" fill="#a71d2a"/>
+      <!-- Đuôi tua rua đung đưa -->
+      <g class="tassel">
+        <line x1="50" y1="105" x2="50" y2="114" stroke="#f1a93b" stroke-width="2"/>
+        <circle cx="50" cy="115" r="3.5" fill="#f39c12"/>
+        <path d="M46 117L44 138M50 117L50 140M54 117L56 138" stroke="#d63031" stroke-width="2" stroke-linecap="round"/>
+      </g>
+      <!-- Gradient tô màu lồng đèn -->
+      <defs>
+        <radialGradient id="lantern-glow-grad" cx="45%" cy="45%" r="65%">
+          <stop offset="0%" stop-color="#fff4b8"/>
+          <stop offset="35%" stop-color="#ff793f"/>
+          <stop offset="85%" stop-color="#c0392b"/>
+          <stop offset="100%" stop-color="#7a1c1d"/>
+        </radialGradient>
+      </defs>
+    </svg>
+    <div class="lantern-light-core"></div>
+  </div>
+
+  <!-- Particle / Trail Canvas -->
+  <canvas id="trailCanvas"></canvas>
+  <!-- Background Canvas for Stars & Floating Sky Lanterns -->
+  <canvas id="skyCanvas"></canvas>
+
+  <!-- Unified Music Player Widget -->
+  <div class="music-widget" id="musicWidget">
+    <div class="vinyl-disc" id="vinylDisc" title="Nhấn để Tạm dừng / Phát nhạc">
+      <div class="disc-groove"></div>
+      <div class="disc-label">
+        <i class="fa-solid fa-moon"></i>
+      </div>
+    </div>
+    
+    <div class="music-content-box">
+      <div class="music-title-wrap" id="musicTitleWrap" title="Nhấn để Tạm dừng / Phát nhạc">
+        <span class="music-title">Hẹn Em Dưới Pháo Hoa</span>
+        <span class="music-waves" id="musicWaves">
+          <span></span><span></span><span></span>
+        </span>
+      </div>
+      
+      <!-- Thanh điều khiển âm lượng tích hợp to rõ dễ chỉnh -->
+      <div class="music-volume-row">
+        <button class="vol-btn" id="volMuteBtn" title="Tắt / Bật tiếng">
+          <i class="fa-solid fa-volume-high" id="volIcon"></i>
+        </button>
+        <input type="range" id="volSlider" class="vol-slider" min="0" max="100" value="70" title="Kéo để chỉnh âm lượng">
+        <span class="vol-val" id="volVal">70%</span>
+      </div>
+    </div>
+
+    <audio id="bgMusic" loop preload="auto" autoplay>
+      <source src="music.mp3" type="audio/mpeg">
+    </audio>
+  </div>
+
+  <!-- Main Web Container -->
+  <main class="page-container">
+
+    <!-- Hero Section with Glowing Moon & Greeting -->
+    <section class="hero-section">
+      <!-- Glowing 3D-effect Moon -->
+      <div class="moon-wrapper">
+        <div class="moon-halo"></div>
+        <div class="moon-halo-secondary"></div>
+        <div class="moon" id="moon">
+          <div class="moon-crater c1"></div>
+          <div class="moon-crater c2"></div>
+          <div class="moon-crater c3"></div>
+          <div class="moon-crater c4"></div>
+          <!-- Silhouette of Rabbit / Chang'e under tree -->
+          <div class="moon-silhouette"></div>
+        </div>
+        <!-- Passing Clouds -->
+        <div class="cloud cloud-1"></div>
+        <div class="cloud cloud-2"></div>
+        <div class="cloud cloud-3"></div>
+      </div>
+
+      <!-- Main Heading & Title -->
+      <div class="hero-content">
+        <div class="festival-badge">
+          <span class="badge-sparkle">✦</span>
+          <span>Tết Đoàn Viên • Rằm Tháng Tám</span>
+          <span class="badge-sparkle">✦</span>
+        </div>
+        <h1 class="hero-title">
+          Vầng Trăng Của Riêng <span class="highlight-name" id="herNameDisplay">Em</span>
+        </h1>
+        <p class="hero-subtitle">
+          "Trời đêm nay ngập tràn hàng vạn ngôi sao lấp lánh, nhưng nhìn xuống lại có một ngôi sao rực rỡ đang cười với anh "
+        </p>
+
+        <!-- Action Buttons -->
+        <div class="hero-actions">
+          <button class="btn btn-primary" id="openLetterBtn">
+            <i class="fa-solid fa-envelope-open-text"></i>
+            <span>Mở Bức Thư Của Riêng Em</span>
+          </button>
+          <button class="btn btn-secondary" id="openWishModalBtn">
+            <i class="fa-solid fa-paper-plane"></i>
+            <span>Thả Lồng Đèn Ước Nguyện</span>
+          </button>
+          <button class="btn btn-outline" id="openCakeBtn">
+            <i class="fa-solid fa-cookie"></i>
+            <span>Mở Bánh Nhận Quà</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Floating Autumn Leaves & Sparkles Decor -->
+K
+
+    <!-- SECTION: THE LETTER (Bức Thư Tình Trung Thu) -->
+    <section class="section-letter" id="letterSection">
+      <div class="section-header">
+        <span class="sub-tag">Tâm Thư Gửi Bé</span>
+        <h2 class="section-title">Gửi Em</h2>
+        <div class="title-divider">
+          <span>❖</span>
+        </div>
+      </div>
+
+      <div class="letter-card-wrapper">
+        <div class="letter-envelope" id="envelopeWrapper">
+          <!-- Flap / Nắp phong bì -->
+          <div class="envelope-flap"></div>
+          
+          <!-- Seal con dấu trăng rằm -->
+          <div class="wax-seal" id="waxSeal">
+            <div class="seal-inner">
+              <i class="fa-solid fa-moon"></i>
+              
+            </div>
+          </div>
+
+          <!-- Nội dung bức thư bên trong -->
+          <div class="letter-paper" id="letterPaper">
+            <div class="paper-texture"></div>
+            <div class="letter-inner-content">
+              <div class="letter-date">Rằm tháng Tám, Mùa Đoàn Viên</div>
+              <h3 class="letter-salutation">Gửi cục dàng của anh,</h3>
+              
+              <div class="letter-body" id="letterBody">
+                <p>
+                  Trung Thu là mùa của trăng tròn vẹn nguyên, của đèn hoa rực rỡ và những điều ngọt ngào nhất. Người ta hay ngước lên trời ngắm ánh trăng sáng, nhưng anh may mắn hơn khi chỉ cần cuối xuống là thấy nụ cười tựa ánh trăng sáng của em rồi.
+                </p>
+                <p>
+                  Chúc em Trung Thu năm nay ngập tràn niềm vui, hạnh phúc và luôn giữ nụ cười rực rỡ giống như ánh sao trên trời đó trên mặt em. Anh hy vọng năm nay có thể cùng em đồng hành với nhau qua những khó khăn và cùng nhau phát triển giúp cả hai trở nên một phiên bản tốt nhất cho cả hai đứa nha.
+                </p>
+
+              </div>
+
+              <div class="letter-footer">
+                <div class="stamp-heart">
+                  <i class="fa-solid fa-heart"></i>
+                </div>
+                <div class="signature">
+                  <span class="sign-note">Gửi từ</span>
+                  <span class="sign-name" id="senderNameDisplay">Lê Khánh Luân</span>
+                </div>
+              </div>
+
+              <!-- Nút chỉnh sửa nhanh lời chúc cho bạn -->
+              <div class="letter-edit-action">
+                <button class="btn-tiny" id="customizeBtn">
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: LỒNG ĐÈN & THẢ ĐÈN TRỜI TƯƠNG TÁC -->
+    <section class="section-wishes" id="wishesSection">
+      <div class="section-header">
+        <span class="sub-tag">Gửi Ước Nguyện Lên Mây</span>
+        <h2 class="section-title">Bầu Trời Đèn Hoa Đăng</h2>
+        <p class="section-desc">Mỗi chiếc đèn mang theo một lời chúc chân thành, bay vút lên bầu trời đêm rằm</p>
+      </div>
+
+      <div class="wish-board">
+        <div class="wish-item lantern-card" data-speed="1">
+          <div class="card-lantern-icon">🏮</div>
+          <p class="wish-text">"Chúc em luôn xinh đẹp, rạng rỡ và ngập tràn hạnh phúc mỗi ngày!"</p>
+          <span class="wish-sender">✦ Từ Luânnnn</span>
+        </div>
+
+        <!-- <div class="wish-item lantern-card" data-speed="1.2">
+          <div class="card-lantern-icon">🥮</div>
+          <p class="wish-text">"Ăn nhiề"</p>
+          <span class="wish-sender">✦ Lời Chúc Ngọt Ngào</span>
+        </div> -->
+
+        <div class="wish-item lantern-card" data-speed="0.9">
+          <div class="card-lantern-icon">✨</div>
+          <p class="wish-text">"Mong mọi điều ước của em trong đêm trăng rằm này đều trở thành hiện thực."</p>
+          <span class="wish-sender">✦ Nguyện Ước Dưới Trăng</span>
+        </div>
+
+        <!-- <div class="wish-item lantern-card" data-speed="1.1">
+          <div class="card-lantern-icon">🌕</div>
+          <p class="wish-text">"Dù khoảng cách có xa bao nhiêu, cùng nhìn lên một vầng trăng là tim ta cạnh nhau."</p>
+          <span class="wish-sender">✦ Tâm Tình Mùa Trăng</span>
+        </div> -->
+      </div>
+
+      <div class="quick-release-box">
+        <button class="btn btn-lantern-release" id="fastReleaseBtn">
+          <i class="fa-solid fa-fire-flame-curved"></i>
+          <span>Chạm vào đây để thả thêm một chiếc đèn trời!</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+   
+
+  </main>
+
+  <!-- MODAL: BỨC THƯ NGUYỆN ƯỚC DƯỚI TRĂNG (THẢ ĐÈN TRỜI) -->
+  <div class="modal-overlay" id="wishModal">
+    <div class="modal-card wish-letter-card" id="wishLetterCard">
+      <button class="modal-close" id="closeWishModal" title="Đóng">&times;</button>
+      
+      <!-- Họa tiết góc thư cổ điển mạ vàng -->
+      <div class="letter-corner-decor tl"></div>
+      <div class="letter-corner-decor tr"></div>
+      <div class="letter-corner-decor bl"></div>
+      <div class="letter-corner-decor br"></div>
+      
+      <div class="wish-letter-header">
+        <div class="wish-letter-icon">
+          <span class="floating-mini-lantern">🏮</span>
+          <span class="floating-mini-moon">🌕</span>
+          <span class="floating-mini-lantern">✨</span>
+        </div>
+        <h3 class="wish-letter-title">Tâm Thư Gửi Ánh Trăng Đêm Rằm</h3>
+        <p class="wish-letter-subtitle">Viết những điều em muốn nói, tâm tư hoặc nguyện ước thầm kín nhất. Chiếc đèn lồng sẽ mang bức thư này bay vút lên bầu trời sao.</p>
+      </div>
+
+      <div class="wish-letter-body">
+        <div class="wish-form-row">
+          <label for="customWishSender"><i class="fa-solid fa-feather-pointed"></i> Người gửi tâm thư:</label>
+          <input type="text" id="customWishSender"  maxlength="35">
+        </div>
+
+        <div class="wish-form-row">
+          <label for="customWishInput"><i class="fa-solid fa-scroll"></i> Điều em muốn nói / Lời ước nguyện:</label>
+          <div class="parchment-textarea-wrapper">
+            <textarea id="customWishInput" placeholder="Đêm nay dưới vầng trăng rằm, điều em muốn gửi gắm là...&#10;(Ước mơ của em, những lời muốn nhắn gửi cùng anh, hoặc một nguyện ước bình yên...)" rows="5"></textarea>
+            <div class="parchment-watermark">
+              <i class="fa-solid fa-moon"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="wish-letter-footer">
+        <button class="btn btn-primary btn-release-letter" id="confirmReleaseWish">
+          <i class="fa-solid fa-fire-flame-curved"></i>
+          <span>Thắp Lửa & Thả Bức Thư Lên Bầu Trời</span>
+          <i class="fa-solid fa-paper-plane"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: BẺ BÁNH TRUNG THU MAY MẮN -->
+  <div class="modal-overlay" id="cakeModal">
+    <div class="modal-card cake-card">
+      <button class="modal-close" id="closeCakeModal">&times;</button>
+      <div class="cake-box">
+        <div class="mooncake-interactive" id="interactiveCake">
+          <div class="cake-left"></div>
+          <div class="cake-right"></div>
+          <div class="cake-pattern">
+            <span>福</span>
+          </div>
+          <div class="click-hint">Chạm vào bánh để bẻ đôi!</div>
+        </div>
+      </div>
+      <div class="cake-message-box" id="cakeMessage">
+        <div class="scroll-fortune">
+          <span class="fortune-tag">Thông Điệp Nhân Quả Ngọt Ngào</span>
+          <p id="fortuneText">"Bạn vừa bẻ được chiếc bánh may mắn! Phần thưởng: Được chàng trai bao trọn gói đi dạo phố đèn lồng và ăn bất cứ món gì bạn thích!"</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: TÙY CHỈNH TÊN & LỜI CHÚC (EASY CUSTOMIZER) -->
+  <div class="modal-overlay" id="customizerModal">
+    <div class="modal-card config-card">
+      <button class="modal-close" id="closeConfigModal">&times;</button>
+      <div class="modal-header">
+        <div class="modal-icon">✍️</div>
+        <h3>Tùy Chỉnh Cho Nàng</h3>
+        <p>Cá nhân hóa tên và lời chúc dành riêng cho cô ấy</p>
+      </div>
+      <div class="config-form">
+        <div class="form-group">
+          <label for="cfgHerName">Tên của cô ấy (hoặc biệt danh dễ thương):</label>
+          <input type="text" id="cfgHerName" >
+        </div>
+        <div class="form-group">
+          <label for="cfgSenderName">Tên của bạn:</label>
+          <input type="text" id="cfgSenderName">
+        </div>
+        <div class="form-group">
+          <label for="cfgLetterText">Lời chúc chân thành:</label>
+          <textarea id="cfgLetterText" rows="5" placeholder="Nhập lời chúc từ tận đáy lòng của bạn..."></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="resetDefaultBtn">Mặc Định</button>
+        <button class="btn btn-primary" id="saveCustomBtn">Lưu Thay Đổi</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notification Toast -->
+  <div class="toast" id="toastMessage"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
