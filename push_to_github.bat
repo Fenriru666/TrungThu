@@ -5,7 +5,7 @@ color 0B
 
 echo ======================================================================
 echo    🏮 ĐANG ĐẨY TRANG WEB TRUNG THU LÊN GITHUB CỦA BẠN
-echo    Repository: https://github.com/Fenriru666/TrungThu.git
+echo    Repository: https://github.com/Fenriru666/TrungThu
 echo ======================================================================
 echo.
 
@@ -55,3 +55,4 @@ if %errorlevel% equ 0 (
 
 echo.
 pause
+
