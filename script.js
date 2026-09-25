@@ -56,8 +56,7 @@ function loadSavedCustomization() {
   }
 }
 
-// --- 3. CUSTOM LANTERN CURSOR & PARTICLE TRAIL ---
-const cursorLantern = document.getElementById("cursor-lantern");
+// --- 3. PARTICLE TRAIL & CLICK EXPLOSION ---
 const trailCanvas = document.getElementById("trailCanvas");
 const trailCtx = trailCanvas.getContext("2d");
 const skyCanvas = document.getElementById("skyCanvas");
@@ -65,8 +64,6 @@ const skyCtx = skyCanvas.getContext("2d");
 
 let mouseX = window.innerWidth / 2;
 let mouseY = window.innerHeight / 2;
-let lanternX = mouseX;
-let lanternY = mouseY;
 let particles = [];
 
 function resizeCanvases() {
@@ -78,14 +75,13 @@ function resizeCanvases() {
 
 window.addEventListener("resize", resizeCanvases);
 
-// Theo dõi vị trí chuột
+// Theo dõi vị trí chuột và tạo vệt hạt sáng lấp lánh nhẹ
 window.addEventListener("mousemove", (e) => {
   mouseX = e.clientX;
   mouseY = e.clientY;
 
-  // Tạo hạt sáng đom đóm rơi ra từ đáy lồng đèn
-  if (Math.random() < 0.6) {
-    particles.push(new TrailParticle(lanternX, lanternY + 35));
+  if (Math.random() < 0.4) {
+    particles.push(new TrailParticle(mouseX, mouseY));
   }
 });
 
@@ -123,18 +119,8 @@ class TrailParticle {
   }
 }
 
-// Vòng lặp cập nhật con trỏ lồng đèn & vệt sáng
+// Vòng lặp cập nhật vệt sáng
 function updateCursorAndTrail() {
-  // Lerp chuyển động mượt mà cho lồng đèn
-  lanternX += (mouseX - lanternX) * 0.25;
-  lanternY += (mouseY - lanternY) * 0.25;
-
-  if (cursorLantern) {
-    cursorLantern.style.left = `${lanternX}px`;
-    cursorLantern.style.top = `${lanternY}px`;
-  }
-
-  // Vẽ các hạt sáng
   trailCtx.clearRect(0, 0, trailCanvas.width, trailCanvas.height);
   for (let i = particles.length - 1; i >= 0; i--) {
     particles[i].update();
@@ -169,19 +155,6 @@ function createClickExplosion(x, y) {
     p.color = ["#ffd32a", "#ff6b81", "#70a1ff", "#ffa502"][Math.floor(Math.random() * 4)];
     particles.push(p);
   }
-}
-
-// Bật hiệu ứng phát sáng mạnh khi trỏ vào nút tương tác
-function setupHoverEffect() {
-  const interactives = document.querySelectorAll("button, a, .wish-item, .wax-seal, .mooncake-interactive, .scroll-down-indicator, .vinyl-disc, .vol-slider, .music-title-wrap");
-  interactives.forEach(el => {
-    el.addEventListener("mouseenter", () => {
-      cursorLantern.classList.add("hovering");
-    });
-    el.addEventListener("mouseleave", () => {
-      cursorLantern.classList.remove("hovering");
-    });
-  });
 }
 
 // --- 4. BẦU TRỜI SAO BĂNG & ĐÈN TRỜI KHỔNG MINH (SKY CANVAS) ---
@@ -882,7 +855,6 @@ window.addEventListener("click", (e) => {
 window.addEventListener("DOMContentLoaded", () => {
   resizeCanvases();
   loadSavedCustomization();
-  setupHoverEffect();
   initSky();
   animateSky();
   updateCursorAndTrail();

@@ -6,10 +6,8 @@ Một trang web chủ đề **Tết Trung Thu (Rằm Tháng Tám)** được thi
 
 ## ✨ CÁC TÍNH NĂNG VÀ HIỆU ỨNG ĐẶC SẮC
 
-1. **🏮 Con trỏ chuột Lồng Đèn Đỏ Vàng (Lantern Cursor)**:
-   - Thay thế hoàn toàn con trỏ chuột thông thường bằng hình chiếc lồng đèn Trung Thu truyền thống đung đưa uyển chuyển theo chuyển động chuột.
-   - Lõi đèn tỏa ánh lửa vàng ấm áp bập bùng.
-   - Vệt hạt đom đóm và bụi sao ánh kim (`Golden Sparkle Trail`) lấp lánh rơi rụng theo từng cử động chuột.
+1. **✨ Hiệu Ứng Bụi Sao & Pháo Hoa Tương Tác Chuột**:
+   - Vệt hạt đom đóm và bụi sao ánh kim (`Golden Sparkle Trail`) lấp lánh rơi rụng nhẹ nhàng theo cử động chuột.
    - Khi nhấp chuột (click): Bung tỏa pháo hoa lung linh và phát tiếng chuông ngân du dương (`Web Audio API`).
 
 2. **🌕 Vầng Trăng Rằm 3D Tỏa Hào Quang Huyền Ảo**:

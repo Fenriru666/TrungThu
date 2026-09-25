@@ -17,41 +17,7 @@
 </head>
 <body>
 
-  <!-- Custom Lantern Cursor Elements -->
-  <div id="cursor-lantern" class="cursor-lantern">
-    <svg class="lantern-svg" viewBox="0 0 100 140" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <!-- Dây treo -->
-      <line x1="50" y1="0" x2="50" y2="25" stroke="#f1a93b" stroke-width="2.5" stroke-linecap="round"/>
-      <!-- Nắp trên -->
-      <path d="M35 25C35 23 65 23 65 25L60 30H40L35 25Z" fill="#a71d2a"/>
-      <!-- Thân lồng đèn đỏ vàng tròn căng -->
-      <ellipse cx="50" cy="65" rx="32" ry="35" fill="url(#lantern-glow-grad)" />
-      <!-- Khung nan lồng đèn -->
-      <ellipse cx="50" cy="65" rx="20" ry="35" stroke="#e67e22" stroke-width="1.5" fill="none" opacity="0.6"/>
-      <line x1="50" y1="30" x2="50" y2="100" stroke="#f39c12" stroke-width="2" opacity="0.8"/>
-      <!-- Chữ Phúc hoặc Nguyệt nhỏ mờ ảo -->
-      <circle cx="50" cy="65" r="11" fill="#fff3b0" opacity="0.85"/>
-      <path d="M46 62h8M50 59v12M46 70h8" stroke="#a71d2a" stroke-width="1.8" stroke-linecap="round"/>
-      <!-- Nắp đáy -->
-      <path d="M40 100H60L55 105H45L40 100Z" fill="#a71d2a"/>
-      <!-- Đuôi tua rua đung đưa -->
-      <g class="tassel">
-        <line x1="50" y1="105" x2="50" y2="114" stroke="#f1a93b" stroke-width="2"/>
-        <circle cx="50" cy="115" r="3.5" fill="#f39c12"/>
-        <path d="M46 117L44 138M50 117L50 140M54 117L56 138" stroke="#d63031" stroke-width="2" stroke-linecap="round"/>
-      </g>
-      <!-- Gradient tô màu lồng đèn -->
-      <defs>
-        <radialGradient id="lantern-glow-grad" cx="45%" cy="45%" r="65%">
-          <stop offset="0%" stop-color="#fff4b8"/>
-          <stop offset="35%" stop-color="#ff793f"/>
-          <stop offset="85%" stop-color="#c0392b"/>
-          <stop offset="100%" stop-color="#7a1c1d"/>
-        </radialGradient>
-      </defs>
-    </svg>
-    <div class="lantern-light-core"></div>
-  </div>
+
 
   <!-- Particle / Trail Canvas -->
   <canvas id="trailCanvas"></canvas>

@@ -35,45 +35,7 @@ html, body {
   background: radial-gradient(circle at 50% 20%, var(--bg-sky-top) 0%, var(--bg-sky-mid) 45%, var(--bg-deep-night) 100%);
   color: var(--text-primary);
   font-family: var(--font-sans);
-  cursor: none; /* Ẩn chuột mặc định để dùng con trỏ lồng đèn */
   scroll-behavior: smooth;
-}
-
-/* ========================================================
-   CUSTOM LANTERN CURSOR
-   ======================================================== */
-.cursor-lantern {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 55px;
-  height: 75px;
-  pointer-events: none;
-  z-index: 99999;
-  transform: translate(-50%, -15%);
-  transition: transform 0.08s ease-out;
-  filter: drop-shadow(0 0 16px rgba(255, 177, 66, 0.85)) drop-shadow(0 0 35px rgba(235, 77, 75, 0.6));
-  will-change: transform, left, top;
-}
-
-.lantern-svg {
-  width: 100%;
-  height: 100%;
-  transform-origin: 50% 0%;
-  animation: lanternSwing 3.5s ease-in-out infinite alternate;
-}
-
-.lantern-light-core {
-  position: absolute;
-  top: 35px;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 20px;
-  height: 20px;
-  background: radial-gradient(circle, #fffbe0 10%, #ff9f1a 60%, transparent 80%);
-  border-radius: 50%;
-  filter: blur(2px);
-  animation: candleFlicker 1.8s infinite ease-in-out;
 }
 
 @keyframes lanternSwing {
@@ -83,18 +45,6 @@ html, body {
   100% {
     transform: rotate(6deg);
   }
-}
-
-@keyframes candleFlicker {
-  0%, 100% { opacity: 0.95; transform: translate(-50%, -50%) scale(1); }
-  50% { opacity: 0.7; transform: translate(-50%, -50%) scale(0.85); }
-  75% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
-}
-
-/* Hiệu ứng khi hover vào nút / link */
-.cursor-lantern.hovering {
-  transform: translate(-50%, -20%) scale(1.2);
-  filter: drop-shadow(0 0 25px rgba(255, 218, 121, 1)) drop-shadow(0 0 45px rgba(255, 71, 87, 0.9));
 }
 
 /* Canvas layers */
@@ -1365,13 +1315,6 @@ section {
    RESPONSIVE DESIGN (MOBILE & TABLET)
    ======================================================== */
 @media (max-width: 768px) {
-  html, body {
-    cursor: auto; /* Màn hình cảm ứng thì dùng cử chỉ tay bình thường */
-  }
-
-  .cursor-lantern {
-    display: none !important;
-  }
 
   .moon-wrapper {
     width: 180px;
